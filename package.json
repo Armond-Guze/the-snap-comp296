@@ -1,0 +1,24 @@
+{
+  "name": "the-snap-comp296",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"cd backend && node --watch server.js\" \"cd frontend && npm run dev\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Armond-Guze/the-snap-comp296.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Armond-Guze/the-snap-comp296/issues"
+  },
+  "homepage": "https://github.com/Armond-Guze/the-snap-comp296#readme",
+  "devDependencies": {
+    "concurrently": "^10.0.6"
+  }
+}

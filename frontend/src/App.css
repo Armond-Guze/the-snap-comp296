@@ -49,3 +49,16 @@ body {
 .navbar-links a:hover {
   color: #60a5fa;
 }
+
+.player-search {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.player-search input {
+  width: 350px;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}

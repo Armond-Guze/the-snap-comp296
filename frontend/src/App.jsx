@@ -8,7 +8,6 @@ function App() {
     <div>
       <Navbar />
       <PlayerSearch />
-      <h1> This is The Snap Website</h1>
     </div>
   )
 }

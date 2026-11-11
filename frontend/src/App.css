@@ -2,7 +2,7 @@ body {
   margin: 0;
   display: block;
   min-width: 320px;
-  background-color: #f8fafc;
+  background-color: #111e33;
   font-family: Arial, sans-serif;
 }
 
@@ -53,6 +53,8 @@ body {
 .player-search {
   text-align: center;
   margin-top: 50px;
+  color: white;
+  border-radius: 5px;
 }
 
 .player-search input {
@@ -60,5 +62,27 @@ body {
   padding: 12px;
   font-size: 16px;
   border: 1px solid #ccc;
+  background-color: #111e33;
+  color: white;
   border-radius: 5px;
+}
+
+.player-search button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.player-details {
+  margin: 30px auto;
+  padding: 20px;
+  width: 350px;
+  background-color: #0b1628;
+  color: white;
+  border-radius: 8px;
 }

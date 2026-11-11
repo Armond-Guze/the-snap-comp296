@@ -136,11 +136,13 @@ const startServer = () => {
       );
 
       if (!response.ok) {
+        console.log("SportsDataIO Status:", response.status);
+        console.log("SportsDataIO Error:", await response.text());
+
         return res.status(response.status).json({
           error: "Failed to retrieve NFL player stats",
         });
       }
-
       const stats = await response.json();
       res.json(stats);
     } catch (error) {

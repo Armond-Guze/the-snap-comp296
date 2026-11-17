@@ -53,13 +53,34 @@ function PlayerSearch() {
 
   return (
     <div className="player-search" id="players">
-      <h1>Player Search</h1>
-      <input
-        type="text"
-        placeholder="Search for a player"
-        value={search}
-        onChange={(event) => setSearch(event.target.value)}
-      />
+      <div className="player-search-header">
+        <h1>Player Search</h1>
+        <div className="player-search-box">
+          <input
+            type="text"
+            placeholder="Search for a player"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+          />
+
+          {search && (
+            <div className="player-search-results">
+              {filteredPlayers.map((player) => (
+                <button
+                  key={player.id}
+                  onClick={() => {
+                    setSelectedPlayer(player);
+                    setSearch("");
+                  }}
+                >
+                  {player.name} - {player.team}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
       {selectedPlayer && (
         <div className="player-details">
           <h2>{selectedPlayer.name}</h2>
@@ -68,7 +89,7 @@ function PlayerSearch() {
 
           {playerStats && (
             <div>
-              <h3>2025 Season Statistics</h3>
+              <h3>2026 Season Statistics</h3>
 
               {selectedPlayer.position === "QB" && (
                 <>
@@ -107,12 +128,6 @@ function PlayerSearch() {
           )}
         </div>
       )}
-      {search &&
-        filteredPlayers.map((player) => (
-          <button key={player.id} onClick={() => setSelectedPlayer(player)}>
-            {player.name} - {player.team}
-          </button>
-        ))}
 
       <p>Players loaded: {players.length}</p>
     </div>

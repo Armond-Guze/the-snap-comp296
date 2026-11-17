@@ -88,39 +88,59 @@ function PlayerSearch() {
           <p>Position: {selectedPlayer.position}</p>
 
           {playerStats && (
-            <div>
+            <div className="player-stats">
               <h3>2026 Season Statistics</h3>
 
               {selectedPlayer.position === "QB" && (
                 <>
-                  <p>Passing Yards: {playerStats.PassingYards ?? "N/A"}</p>
                   <p>
-                    Passing Touchdowns: {playerStats.PassingTouchdowns ?? "N/A"}
+                    <strong>{playerStats.PassingYards ?? "N/A"}</strong>
+                    <span>Passing Yards:</span>
                   </p>
                   <p>
-                    Interceptions: {playerStats.PassingInterceptions ?? "N/A"}
+                    <strong>{playerStats.PassingTouchdowns ?? "N/A"}</strong>
+                    <span>Passing Touchdowns</span>
+                  </p>
+                  <p>
+                    <strong>{playerStats.PassingInterceptions ?? "N/A"}</strong>
+                    <span>Interceptions</span>
                   </p>
                 </>
               )}
 
               {selectedPlayer.position === "RB" && (
                 <>
-                  <p>Rushing Yards: {playerStats.RushingYards ?? "N/A"}</p>
                   <p>
-                    Rushing Touchdowns: {playerStats.RushingTouchdowns ?? "N/A"}
+                    <strong>{playerStats.RushingYards ?? "N/A"}</strong>
+                    <span>Rushing Yards</span>
                   </p>
-                  <p>Receptions: {playerStats.Receptions ?? "N/A"}</p>
+                  <p>
+                    <strong>{playerStats.RushingTouchdowns ?? "N/A"}</strong>
+                    <span>Rushing Touchdowns</span>
+                  </p>
+                  <p>
+                    <strong>{playerStats.Receptions ?? "N/A"}</strong>
+                    <span>Receptions</span>
+                  </p>{" "}
                 </>
               )}
 
               {(selectedPlayer.position === "WR" ||
                 selectedPlayer.position === "TE") && (
                 <>
-                  <p>Receptions: {playerStats.Receptions ?? "N/A"}</p>
-                  <p>Receiving Yards: {playerStats.ReceivingYards ?? "N/A"}</p>
                   <p>
-                    Receiving Touchdowns:{" "}
-                    {playerStats.ReceivingTouchdowns ?? "N/A"}
+                    <strong>{playerStats.Receptions ?? "N/A"}</strong>
+                    <span>Receptions</span>
+                  </p>{" "}
+                  <p>
+                    <strong>{playerStats.ReceivingYards ?? "N/A"}</strong>
+                    <span>Receiving Yards</span>
+                  </p>
+                  <p>
+                      <strong>
+                        {playerStats.ReceivingTouchdowns ?? "N/A"}
+                      </strong>
+                      <span>Receiving Touchdowns</span>
                   </p>
                 </>
               )}
@@ -128,7 +148,6 @@ function PlayerSearch() {
           )}
         </div>
       )}
-
       <p>Players loaded: {players.length}</p>
     </div>
   );

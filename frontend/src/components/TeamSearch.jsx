@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 function TeamSearch() {
   const [teams, setTeams] = useState([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     async function getTeams() {
@@ -24,7 +25,19 @@ function TeamSearch() {
 
   return (
     <div className="team-search" id="teams">
-      <h1>Team Search</h1>
+      <div className="team-search-header">
+        <h1>Team Search</h1>
+
+        <div className="team-search-box">
+          <input
+            type="text"
+            placeholder="Search for a team"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+          />
+        </div>
+      </div>
+
       <p>Teams loaded: {teams.length}</p>
     </div>
   );

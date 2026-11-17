@@ -5,6 +5,7 @@ function PlayerSearch() {
   const [search, setSearch] = useState("");
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [playerStats, setPlayerStats] = useState(null);
+  const [playerPhoto, setPlayerPhoto] = useState(null);
 
   useEffect(() => {
     async function getPlayers() {
@@ -47,6 +48,38 @@ function PlayerSearch() {
     getPlayerStats();
   }, [selectedPlayer]);
 
+  useEffect(() => {
+    if (!selectedPlayer) return;
+
+    let active = true;
+
+    async function getPlayerPhoto() {
+      try {
+        const response = await fetch(
+          `/api/player-headshot?name=${encodeURIComponent(selectedPlayer.name)}&team=${encodeURIComponent(selectedPlayer.team)}`,
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch player headshot");
+        }
+
+        const data = await response.json();
+
+        if (active) {
+          setPlayerPhoto(data.photoUrl || null);
+        }
+      } catch (error) {
+        console.error("Error fetching player headshot:", error);
+      }
+    }
+
+    getPlayerPhoto();
+
+    return () => {
+      active = false;
+    };
+  }, [selectedPlayer]);
+
   const filteredPlayers = players.filter((player) =>
     player.name.toLowerCase().includes(search.toLowerCase()),
   );
@@ -83,9 +116,30 @@ function PlayerSearch() {
 
       {selectedPlayer && (
         <div className="player-details">
-          <h2>{selectedPlayer.name}</h2>
-          <p>Team: {selectedPlayer.team}</p>
-          <p>Position: {selectedPlayer.position}</p>
+          <div className="player-profile">
+            {playerPhoto ? (
+              <img
+                className="player-headshot"
+                src={playerPhoto}
+                alt={selectedPlayer.name}
+                onError={() => setPlayerPhoto(null)}
+              />
+            ) : (
+              <div className="player-headshot-placeholder">
+                {selectedPlayer.name
+                  .split(" ")
+                  .map((part) => part[0])
+                  .slice(0, 2)
+                  .join("")}
+              </div>
+            )}
+
+            <div>
+              <h2>{selectedPlayer.name}</h2>
+              <p>Team: {selectedPlayer.team}</p>
+              <p>Position: {selectedPlayer.position}</p>
+            </div>
+          </div>
 
           {playerStats && (
             <div className="player-stats">
@@ -137,10 +191,8 @@ function PlayerSearch() {
                     <span>Receiving Yards</span>
                   </p>
                   <p>
-                      <strong>
-                        {playerStats.ReceivingTouchdowns ?? "N/A"}
-                      </strong>
-                      <span>Receiving Touchdowns</span>
+                    <strong>{playerStats.ReceivingTouchdowns ?? "N/A"}</strong>
+                    <span>Receiving Touchdowns</span>
                   </p>
                 </>
               )}

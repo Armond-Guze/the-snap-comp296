@@ -179,3 +179,42 @@ body {
   font-size: 15px;
   color: #94a3b8;
 }
+
+.player-profile {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 35px;
+}
+
+.player-headshot,
+.player-headshot-placeholder {
+  width: 160px;
+  height: 180px;
+  flex-shrink: 0;
+  background-color: #172940;
+  border-radius: 8px;
+}
+
+.player-headshot {
+  object-fit: contain;
+}
+
+.player-headshot-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  font-weight: bold;
+  color: white;
+}
+
+.player-profile h2 {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+.player-profile p {
+  color: #94a3b8;
+  font-size: 17px;
+}

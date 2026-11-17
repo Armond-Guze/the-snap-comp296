@@ -152,6 +152,58 @@ const startServer = () => {
     }
   });
 
+  app.get("/api/player-headshot", async (req, res) => {
+    const { name, team } = req.query;
+
+    if (!name || !team) {
+      return res.status(400).json({ photoUrl: null });
+    }
+
+    const teamAliases = {
+      JAC: "jax",
+      LA: "lar",
+      WSH: "wsh",
+    };
+
+    const espnTeam = teamAliases[team.toUpperCase()] || team.toLowerCase();
+
+    try {
+      const response = await fetch(
+        `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${espnTeam}/roster`,
+      );
+
+      if (!response.ok) {
+        throw new Error("ESPN roster request failed");
+      }
+
+      const data = await response.json();
+
+      const athletes = [];
+
+      for (const group of data.athletes || []) {
+        if (group.items) {
+          for (const player of group.items) {
+            athletes.push(player);
+          }
+        } else {
+          athletes.push(group);
+        }
+      }
+
+      const player = athletes.find(
+        (athlete) =>
+          athlete.displayName?.toLowerCase() === name.trim().toLowerCase(),
+      );
+
+      res.json({
+        photoUrl: player?.headshot?.href || null,
+      });
+    } catch (error) {
+      console.error("ESPN headshot error", error);
+      res.status(502).json({ photoUrl: null });
+    }
+  });
+
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     console.log(`http://localhost:${PORT}/api/health`);

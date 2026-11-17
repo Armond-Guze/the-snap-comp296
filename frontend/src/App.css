@@ -218,3 +218,11 @@ body {
   color: #94a3b8;
   font-size: 17px;
 }
+
+.team-search {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}

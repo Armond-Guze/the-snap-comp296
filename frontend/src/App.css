@@ -114,7 +114,8 @@ body {
   font-size: 15px;
 }
 
-.player-search-results {
+.player-search-results,
+.team-search-results {
   position: absolute;
   top: 100%;
   left: 0;
@@ -127,7 +128,8 @@ body {
   z-index: 10;
 }
 
-.player-search-results button {
+.player-search-results button,
+.team-search-results button {
   display: block;
   width: 100%;
   padding: 12px;
@@ -140,7 +142,8 @@ body {
   border-radius: 0;
 }
 
-.player-search-results button:hover {
+.player-search-results button:hover,
+.team-search-results button:hover {
   background-color: #1e3a5f;
 }
 

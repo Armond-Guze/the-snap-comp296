@@ -204,6 +204,39 @@ const startServer = () => {
     }
   });
 
+  app.get("/api/team-logo", async (req, res) => {
+    const { name } = req.query;
+
+    if (!name) {
+      return res.status(400).json({ logoUrl: null });
+    }
+
+    try {
+      const response = await fetch(
+        "https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams",
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to retrieve team logos");
+      }
+
+      const data = await response.json();
+      const teams = data.sports?.[0]?.leagues?.[0]?.teams || [];
+
+      const team = teams.find(
+        (item) =>
+          item.team.displayName.toLowerCase() === name.trim().toLowerCase(),
+      );
+
+      res.json({
+        logoUrl: team?.team?.logos?.[0]?.href || null,
+      });
+    } catch (error) {
+      console.error("Error fetching team logo:", error);
+      res.status(502).json({ logoUrl: null });
+    }
+  });
+
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     console.log(`http://localhost:${PORT}/api/health`);

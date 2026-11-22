@@ -4,6 +4,7 @@ function TeamSearch() {
   const [teams, setTeams] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedTeam, setSelectedTeam] = useState(null);
+  const [teamLogo, setTeamLogo] = useState(null);
 
   useEffect(() => {
     async function getTeams() {
@@ -23,6 +24,38 @@ function TeamSearch() {
 
     getTeams();
   }, []);
+
+  useEffect(() => {
+    if (!selectedTeam) return;
+
+    let active = true;
+
+    async function getTeamLogo() {
+      try {
+        const response = await fetch(
+          `/api/team-logo?name=${encodeURIComponent(selectedTeam.name)}`,
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to retrieve team logo");
+        }
+
+        const data = await response.json();
+
+        if (active) {
+          setTeamLogo(data.logoUrl || null);
+        }
+      } catch (error) {
+        console.error("Error fetching team logo:", error);
+      }
+    }
+
+    getTeamLogo();
+
+    return () => {
+      active = false;
+    };
+  }, [selectedTeam]);
 
   const filteredTeams = teams.filter((team) =>
     team.name.toLowerCase().includes(search.toLowerCase().trim()),
@@ -48,6 +81,7 @@ function TeamSearch() {
                   type="button"
                   onClick={() => {
                     setSelectedTeam(team);
+                    setTeamLogo(null);
                     setSearch("");
                   }}
                 >
@@ -60,8 +94,18 @@ function TeamSearch() {
       </div>
       {selectedTeam && (
         <div className="team-details">
-          <h2>{selectedTeam.name}</h2>
-          <p>Division: {selectedTeam.division}</p>
+          {teamLogo && (
+            <img
+              className="team-logo"
+              src={teamLogo}
+              alt={selectedTeam.name}
+              onError={() => setTeamLogo(null)}
+            />
+          )}
+          <div>
+            <h2>{selectedTeam.name}</h2>
+            <p>Division: {selectedTeam.division}</p>
+          </div>
         </div>
       )}
       <p>Teams loaded: {teams.length}</p>

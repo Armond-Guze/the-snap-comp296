@@ -253,3 +253,25 @@ body {
   color: white;
   font-size: 15px;
 }
+
+.team-details {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  background-color: #0b1628;
+  padding: 30px;
+  border-radius: 8px;
+  margin: 30px 0;
+}
+
+.team-logo {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.team-details h2 {
+  font-size: 32px;
+  margin-bottom: 15px;
+}

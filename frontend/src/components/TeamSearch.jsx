@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 function TeamSearch() {
   const [teams, setTeams] = useState([]);
+  const [standings, setStandings] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [teamLogo, setTeamLogo] = useState(null);
@@ -23,6 +24,25 @@ function TeamSearch() {
     }
 
     getTeams();
+  }, []);
+
+  useEffect(() => {
+    async function getStandings() {
+      try {
+        const response = await fetch("/api/standings");
+
+        if (!response.ok) {
+          throw new Error("Failed to retrieve standings");
+        }
+
+        const data = await response.json();
+        setStandings(data);
+      } catch (error) {
+        console.error("Error fetching standings:", error);
+      }
+    }
+
+    getStandings();
   }, []);
 
   useEffect(() => {
@@ -59,6 +79,11 @@ function TeamSearch() {
 
   const filteredTeams = teams.filter((team) =>
     team.name.toLowerCase().includes(search.toLowerCase().trim()),
+  );
+
+  const teamRecord = standings.find(
+    (standing) =>
+      standing.team?.toLowerCase() === selectedTeam?.name.toLowerCase(),
   );
 
   return (
@@ -106,6 +131,23 @@ function TeamSearch() {
             <h2>{selectedTeam.name}</h2>
             <p>Division: {selectedTeam.division}</p>
           </div>
+        </div>
+      )}
+
+      {teamRecord && (
+        <div className="team-stats">
+          <p>
+            <strong>{teamRecord.wins}</strong>
+            <span>Wins</span>
+          </p>
+          <p>
+            <strong>{teamRecord.losses}</strong>
+            <span>Losses</span>
+          </p>
+          <p>
+            <strong>{teamRecord.ties}</strong>
+            <span>Ties</span>
+          </p>
         </div>
       )}
       <p>Teams loaded: {teams.length}</p>

@@ -147,7 +147,8 @@ body {
   background-color: #1e3a5f;
 }
 
-.player-stats {
+.player-stats,
+.team-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
@@ -160,7 +161,8 @@ body {
   margin-bottom: 10px;
 }
 
-.player-stats p {
+.player-stats p,
+.team-stats p {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -173,12 +175,14 @@ body {
   margin: 0;
 }
 
-.player-stats strong {
+.player-stats strong,
+.team-stats strong {
   font-size: 32px;
   color: white;
 }
 
-.player-stats span {
+.player-stats span,
+.team-stats span {
   font-size: 15px;
   color: #94a3b8;
 }
